@@ -71,6 +71,7 @@ export function initScrollAnimations() {
 
     // Process steps
     const processSteps = document.querySelectorAll('.process-step')
+    const isMobile = window.innerWidth <= 860
     processSteps.forEach((step, i) => {
         ScrollTrigger.create({
             trigger: step,
@@ -85,11 +86,13 @@ export function initScrollAnimations() {
                 if (i > 0) processSteps[i - 1].classList.add('active')
             },
         })
-        gsap.from(step, {
-            scrollTrigger: { trigger: step, start: 'top 80%', once: true },
-            opacity: 0, x: 40, duration: 0.8, ease: 'power3.out',
-            clearProps: 'opacity',
-        })
+        if (!isMobile) {
+            gsap.from(step, {
+                scrollTrigger: { trigger: step, start: 'top 80%', once: true },
+                opacity: 0, x: 40, duration: 0.8, ease: 'power3.out',
+                clearProps: 'opacity,x',
+            })
+        }
     })
 
     ScrollTrigger.create({
